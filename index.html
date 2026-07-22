@@ -86,38 +86,55 @@
     </div>
   </section>
 
+  <section class="logo-strip">
+    <div class="wrap">
+      <p class="logo-strip-label">Brands we've worked with</p>
+      <div class="logo-row">
+        <img src="https://info.tkh.edu.eg/hubfs/The%20Knowledge%20Hub_Logo-02.png" alt="TKH — The Knowledge Hub Universities" class="brand-logo">
+        <img src="logos/rafeeq.png" alt="Rafeeq" class="brand-logo">
+        <img src="https://companieslogo.com/img/orig/DHBK.QA_BIG-c0609cbf.png" alt="Doha Bank" class="brand-logo">
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="work">
     <div class="wrap">
       <div class="section-head">
         <span class="section-tag">SELECTED WORK</span>
         <h2>Recent projects.</h2>
       </div>
-      <!-- Work grid: to add a new project, copy one .work-card block and update the title, tag, image and link. -->
+      <!-- Work grid: to add a new project, copy one .work-card block, update the title/index, and point data-video at the new clip. -->
       <div class="work-grid">
-        <a class="work-card work-card-lg" href="https://mohammedmontasser.mypixieset.com/portfolio/" target="_blank" rel="noopener" style="--poster: url('https://images-pw.pixieset.com/elementfield/EjVql07/35BA1189-88E4-4284-AAA4-53974D91321F-6950bac4-1500.JPG');">
+        <button type="button" class="work-card work-card-lg" data-video="videos/tkh.mp4" data-title="TKH">
+          <video class="work-video" src="videos/tkh.mp4" muted loop playsinline autoplay preload="metadata"></video>
+          <span class="work-overlay" aria-hidden="true"></span>
           <span class="work-play" aria-hidden="true">▶</span>
-          <div class="work-meta">
+          <span class="work-meta">
             <span class="work-index">01</span>
-            <h3 class="work-title">TKH</h3>
-            <span class="work-link">View project →</span>
-          </div>
-        </a>
-        <a class="work-card" href="https://mohammedmontasser.mypixieset.com/new-page/" target="_blank" rel="noopener" style="--poster: url('https://images-pw.pixieset.com/elementfield/6x4yl7j/BD2443A9-7ACF-4049-8200-E97AB747EEAC-7792654e-1500.JPG');">
+            <span class="work-title">TKH</span>
+            <span class="work-link">Watch full reel →</span>
+          </span>
+        </button>
+        <button type="button" class="work-card" data-video="videos/rafeeq.mp4" data-title="Rafeeq">
+          <video class="work-video" src="videos/rafeeq.mp4" muted loop playsinline autoplay preload="metadata"></video>
+          <span class="work-overlay" aria-hidden="true"></span>
           <span class="work-play" aria-hidden="true">▶</span>
-          <div class="work-meta">
+          <span class="work-meta">
             <span class="work-index">02</span>
-            <h3 class="work-title">Rafeeq</h3>
-            <span class="work-link">View project →</span>
-          </div>
-        </a>
-        <a class="work-card" href="https://mohammedmontasser.mypixieset.com/portfolio/" target="_blank" rel="noopener" style="--poster: url('https://images-pw.pixieset.com/elementfield/LpORGPz/IMG_28052-0f853a54-1500.JPG');">
+            <span class="work-title">Rafeeq</span>
+            <span class="work-link">Watch full reel →</span>
+          </span>
+        </button>
+        <button type="button" class="work-card" data-video="videos/doha-bank.mp4" data-title="Doha Bank">
+          <video class="work-video" src="videos/doha-bank.mp4" muted loop playsinline autoplay preload="metadata"></video>
+          <span class="work-overlay" aria-hidden="true"></span>
           <span class="work-play" aria-hidden="true">▶</span>
-          <div class="work-meta">
+          <span class="work-meta">
             <span class="work-index">03</span>
-            <h3 class="work-title">Doha Bank</h3>
-            <span class="work-link">View project →</span>
-          </div>
-        </a>
+            <span class="work-title">Doha Bank</span>
+            <span class="work-link">Watch full reel →</span>
+          </span>
+        </button>
         <!-- NEW-WORK-ANCHOR: add future project cards here -->
       </div>
 
@@ -153,6 +170,50 @@
       <p class="foot-note">© 2026 CLEVEREVER — AI PRODUCTION &amp; ON-GROUND PRODUCTION. DOHA, QATAR.</p>
     </div>
   </footer>
+
+  <!-- Video lightbox: opened when a work card is clicked -->
+  <div class="video-lightbox" id="videoLightbox">
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close video">×</button>
+    <div class="lightbox-inner">
+      <p class="lightbox-title" id="lightboxTitle"></p>
+      <video id="lightboxVideo" controls playsinline></video>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var lightbox = document.getElementById('videoLightbox');
+      var video = document.getElementById('lightboxVideo');
+      var titleEl = document.getElementById('lightboxTitle');
+      var closeBtn = document.getElementById('lightboxClose');
+
+      document.querySelectorAll('.work-card[data-video]').forEach(function(card){
+        card.addEventListener('click', function(){
+          video.src = card.getAttribute('data-video');
+          titleEl.textContent = card.getAttribute('data-title') || '';
+          lightbox.classList.add('open');
+          document.body.classList.add('lightbox-locked');
+          video.play();
+        });
+      });
+
+      function closeLightbox(){
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+        lightbox.classList.remove('open');
+        document.body.classList.remove('lightbox-locked');
+      }
+
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function(e){
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+  </script>
 
 </body>
 </html>

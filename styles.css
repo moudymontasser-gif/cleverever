@@ -170,10 +170,7 @@ p{ margin: 0; }
   line-height: 1;
 }
 .wordmark span{
-  background: linear-gradient(120deg, var(--primary), var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #f2670c;
 }
 .hero-sub{
   max-width: 640px;
